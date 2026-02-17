@@ -611,7 +611,7 @@
         .transform-gpu { transform: translateZ(0); }
     </style>
 </head>
-<body data-theme="analyst">
+<body data-theme="hacker">
     <!-- Loading Screen -->
     <div id="loadingScreen" class="loading-screen">
         <div class="terminal-text" id="terminalText">
@@ -1076,8 +1076,7 @@
                 // Update header
                 const agentNames = {
                     hacker: 'Breach Architect',
-                    infiltrator: 'Shadow Linguist',
-                    analyst: 'Signal Oracle'
+                    infiltrator: 'Shadow Linguist'
                 };
 
                 document.getElementById('currentAgent').textContent = agentNames[agentId];
@@ -1135,11 +1134,6 @@
                         { name: 'False Face', cooldown: 20, description: 'Temporary persona overlay' },
                         { name: 'Paper Trail', cooldown: 26, description: 'Plant forged identity' },
                         { name: 'Crowd Scripting', type: 'ultimate', description: 'Manipulate public telemetry' }
-                    ],
-                    analyst: [
-                        { name: 'Echo Scan', cooldown: 16, description: 'Highlight vulnerable nodes' },
-                        { name: 'Predictive Mesh', cooldown: 25, description: 'Forecast security sweeps' },
-                        { name: 'Oracle Burst', type: 'ultimate', description: 'Reveal complete mission map' }
                     ]
                 };
 

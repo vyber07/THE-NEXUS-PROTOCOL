@@ -264,7 +264,7 @@ class Database {
       }, {});
     
     const mostPopularAgent = Object.entries(agentCounts)
-      .sort(([,a], [,b]) => b - a)[0]?.[0] || 'analyst';
+      .sort(([,a], [,b]) => b - a)[0]?.[0] || 'hacker';
 
     return {
       totalMissions,

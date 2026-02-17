@@ -76,6 +76,7 @@ interface GameContextType {
   login: (teamName: string, accessCode: string) => Promise<{ success: boolean; message?: string }>;
   logout: () => void;
   selectAgent: (agentId: string) => void;
+  selectTeam: (teamRole: string) => void;
   startMission: (missionId: string) => Promise<void>;
   completeMission: () => void;
   completeObjective: (objectiveId: number) => Promise<void>;
@@ -261,6 +262,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setGameState(prev => ({
       ...prev,
       selectedAgent: agentId,
+    }));
+  }, []);
+
+  const selectTeam = useCallback((teamRole: string) => {
+    setGameState(prev => ({
+      ...prev,
+      currentTeam: teamRole,
     }));
   }, []);
 
@@ -592,6 +600,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     login,
     logout,
     selectAgent,
+    selectTeam,
     startMission,
     completeMission,
     completeObjective,

@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
   team_id TEXT REFERENCES teams(id),
   username TEXT NOT NULL,
-  assigned_role TEXT CHECK (assigned_role IN ('HACKER', 'INFILTRATOR', 'ANALYST')),
+  assigned_role TEXT CHECK (assigned_role IN ('HACKER', 'INFILTRATOR')),
   active_now BOOLEAN DEFAULT 0,
   joined_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   last_seen DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -151,8 +151,7 @@ INSERT OR IGNORE INTO teams (id, name, code, total_shards) VALUES
 -- Insert demo users for Ghost team
 INSERT OR IGNORE INTO users (id, team_id, username, assigned_role) VALUES 
   ('ghost-user-001', 'ghost-team-001', 'CipherMaster', 'HACKER'),
-  ('ghost-user-002', 'ghost-team-001', 'ShadowWalker', 'INFILTRATOR'),
-  ('ghost-user-003', 'ghost-team-001', 'DataOracle', 'ANALYST');
+  ('ghost-user-002', 'ghost-team-001', 'ShadowWalker', 'INFILTRATOR');
 
 -- Insert system configuration
 INSERT OR IGNORE INTO system_config (key, value, description) VALUES 

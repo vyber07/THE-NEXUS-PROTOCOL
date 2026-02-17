@@ -21,7 +21,9 @@ export default function MissionBriefing() {
     if (selectedMission) {
       playSound('success');
       startMission(selectedMission);
-      navigate('/mission');
+      // Mission started - stay on briefing page or navigate elsewhere
+      // For now, just show a success message
+      alert('Mission initiated! Check the mission briefing for objectives.');
     }
   };
 

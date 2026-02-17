@@ -17,7 +17,7 @@ create table public.users (
   id uuid references auth.users(id) primary key,
   team_id uuid references public.teams(id),
   username text not null,
-  assigned_role text check (assigned_role in ('HACKER', 'INFILTRATOR', 'ANALYST')),
+  assigned_role text check (assigned_role in ('HACKER', 'INFILTRATOR')),
   active_now boolean default false,
   joined_at timestamp with time zone default timezone('utc'::text, now()) not null
 );

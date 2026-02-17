@@ -96,42 +96,6 @@ class NexusProtocol {
                         impact: 'Creates "noise" in surveillance systems'
                     }
                 }
-            },
-            analyst: {
-                id: 'analyst',
-                name: 'Signal Oracle',
-                codeName: 'Oracle',
-                description: 'Pattern recognition and predictive analysis specialist',
-                color: '#0AC8B9',
-                philosophy: 'Patterns whisper where humans see noise. He listens, he maps, he predicts.',
-                stats: { hacking: 70, stealth: 40, combat: 30, analysis: 100 },
-                abilities: {
-                    passive: { 
-                        name: 'Pattern Eye', 
-                        description: 'Automatically reveals hidden traps and security measures',
-                        effect: 'Prevents team from walking into obvious dangers'
-                    },
-                    ability1: { 
-                        name: 'Echo Scan', 
-                        description: 'Highlights vulnerable nodes and optimal action paths for 8 seconds',
-                        cooldown: 16, 
-                        duration: 8,
-                        tacticalUse: 'Maximizes efficiency and minimizes risk'
-                    },
-                    ability2: { 
-                        name: 'Predictive Mesh', 
-                        description: 'Forecasts next security sweep with 85% accuracy',
-                        cooldown: 25,
-                        tacticalUse: 'Allows team to avoid detection during high-risk periods'
-                    },
-                    ultimate: { 
-                        name: 'Oracle Burst', 
-                        description: 'Reveals complete mission map with all objectives and threats for 6 seconds',
-                        chargeRequired: true,
-                        duration: 6,
-                        impact: 'Provides perfect information for strategic decision-making'
-                    }
-                }
             }
         };
         
@@ -656,8 +620,7 @@ class NexusProtocol {
     getAgentTraceModifier() {
         const modifiers = {
             hacker: 1.2,     // Higher trace generation
-            infiltrator: 0.7, // Lower trace generation
-            analyst: 0.9     // Moderate trace generation
+            infiltrator: 0.7 // Lower trace generation
         };
         return modifiers[this.currentAgent] || 1.0;
     }
@@ -908,7 +871,7 @@ class NexusProtocol {
         }
         
         this.currentAgent = null;
-        document.body.setAttribute('data-theme', 'analyst');
+        document.body.setAttribute('data-theme', 'hacker');
         
         const currentAgentElement = document.getElementById('currentAgent');
         if (currentAgentElement) {

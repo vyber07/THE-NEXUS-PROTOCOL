@@ -112,7 +112,7 @@ export default function LandingPage() {
 
     setTimeout(() => {
       if (trailerShown) {
-        navigate('/login');
+        navigate('/team-select');
       } else {
         navigate('/trailer');
       }
@@ -170,23 +170,7 @@ export default function LandingPage() {
   return (
     <div className={`landing-page ${showContent ? 'visible' : ''} ${audioStarted ? 'audio-active' : ''}`}>
 
-      {/* Audio Status Indicator - Now a functional mute button */}
-      {audioStarted && (
-        <div
-          className={`audio-indicator ${isMuted ? 'muted' : ''}`}
-          onClick={(e) => {
-            e.stopPropagation();
-            toggleMute();
-          }}
-          title={isMuted ? "Unmute Audio" : "Mute Audio"}
-        >
-          <div className="audio-wave">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-        </div>
-      )}
+
 
       {/* Navigation */}
       <nav className="landing-nav">
@@ -262,7 +246,7 @@ export default function LandingPage() {
               <div className="card-content">
                 <span className="card-icon">◉</span>
                 <h3>The Agents</h3>
-                <p>Two specialists, each with unique skills: the Hacker and the Infiltrator. Choose your path...</p>
+                <p>Two elite specialists, each with unique skills: the Hacker and the Infiltrator. Choose your path...</p>
               </div>
             </div>
             <div className="story-card">
@@ -284,13 +268,10 @@ export default function LandingPage() {
             <span className="section-tag">// OPERATIVES</span>
             <h2 className="section-title">CHOOSE YOUR AGENT</h2>
           </div>
-          {/* Modified grid to center 2 items instead of 3 */}
           <div className="characters-grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 400px))', justifyContent: 'center' }}>
             <div className="character-card" onClick={() => handleCharacterSelect('hacker')}>
               <div className="character-image">
-                <div className="image-placeholder">
-                  <span className="placeholder-icon">💻</span>
-                </div>
+                <img src="/assets/agent01.webp" alt="Red Team - Breach Architect" className="character-img" />
                 <div className="character-overlay"></div>
               </div>
               <div className="character-info">
@@ -301,9 +282,7 @@ export default function LandingPage() {
             </div>
             <div className="character-card" onClick={() => handleCharacterSelect('infiltrator')}>
               <div className="character-image">
-                <div className="image-placeholder">
-                  <span className="placeholder-icon">👤</span>
-                </div>
+                <img src="/assets/agent02.webp" alt="Blue Team - Shadow Linguist" className="character-img" />
                 <div className="character-overlay"></div>
               </div>
               <div className="character-info">
@@ -312,7 +291,6 @@ export default function LandingPage() {
                 <p className="character-role">Social Engineering Expert</p>
               </div>
             </div>
-            {/* Analyst card removed */}
           </div>
         </div>
       </section>
@@ -326,6 +304,7 @@ export default function LandingPage() {
           </div>
           <div className="features-showcase">
             <div className="feature-card large">
+              <img src="/assets/cyberheist.webp" alt="Cyber Heist" className="feature-bg-img" />
               <div className="feature-bg"></div>
               <div className="feature-info">
                 <span className="feature-tag">MISSION_TYPE</span>
@@ -334,6 +313,7 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="feature-card">
+              <img src="/assets/agent01.webp" alt="20+ Tools" className="feature-bg-img" />
               <div className="feature-bg"></div>
               <div className="feature-info">
                 <span className="feature-tag">TOOLS</span>
@@ -342,6 +322,7 @@ export default function LandingPage() {
               </div>
             </div>
             <div className="feature-card">
+              <img src="/assets/agent02.webp" alt="Strategic Gameplay" className="feature-bg-img" />
               <div className="feature-bg"></div>
               <div className="feature-info">
                 <span className="feature-tag">GAMEPLAY</span>

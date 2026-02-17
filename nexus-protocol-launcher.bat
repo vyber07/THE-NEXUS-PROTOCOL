@@ -175,7 +175,7 @@ echo ║     Team Name: Ghost                                          ║
 echo ║     Access Code: 1234                                         ║
 echo ║                                                               ║
 echo ║  🎯 Game Features:                                            ║
-echo ║     • Three Agent Roles (Hacker/Infiltrator/Analyst)         ║
+echo ║     • Two Agent Roles (Hacker/Infiltrator)                   ║
 echo ║     • Real-time Mission System                                ║
 echo ║     • WebSocket Communication                                 ║
 echo ║     • Performance Scoring (F-RANK to S-RANK)                 ║

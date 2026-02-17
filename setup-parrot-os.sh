@@ -414,7 +414,7 @@ CREATE TABLE IF NOT EXISTS users (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   team_id UUID REFERENCES teams(id),
   username TEXT NOT NULL,
-  assigned_role TEXT CHECK (assigned_role IN ('HACKER', 'INFILTRATOR', 'ANALYST')),
+  assigned_role TEXT CHECK (assigned_role IN ('HACKER', 'INFILTRATOR')),
   active_now BOOLEAN DEFAULT FALSE,
   joined_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
 );
@@ -478,7 +478,7 @@ CREATE TABLE IF NOT EXISTS users (
   id TEXT PRIMARY KEY DEFAULT (lower(hex(randomblob(16)))),
   team_id TEXT REFERENCES teams(id),
   username TEXT NOT NULL,
-  assigned_role TEXT CHECK (assigned_role IN ('HACKER', 'INFILTRATOR', 'ANALYST')),
+  assigned_role TEXT CHECK (assigned_role IN ('HACKER', 'INFILTRATOR')),
   active_now BOOLEAN DEFAULT 0,
   joined_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );

@@ -104,7 +104,7 @@ function initGameConnections() {
     characterCards.forEach((card, index) => {
         card.addEventListener('click', () => {
             // Show character info modal or launch game with pre-selected character
-            const characterNames = ['hacker', 'infiltrator', 'analyst'];
+            const characterNames = ['hacker', 'infiltrator'];
             const selectedCharacter = characterNames[index];
             
             // Store character selection for the game

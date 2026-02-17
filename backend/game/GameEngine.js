@@ -235,49 +235,6 @@ class GameEngine {
             chargeRequired: 100
           }
         }
-      },
-
-      analyst: {
-        id: 'analyst',
-        name: 'Signal Oracle',
-        description: 'Intelligence gathering specialist',
-        color: '#F1C76C',
-        stats: {
-          hacking: 70,
-          stealth: 40,
-          combat: 30,
-          analysis: 100
-        },
-        abilities: {
-          passive: {
-            name: 'Pattern Eye',
-            description: 'Reveal hidden traps',
-            effect: 'reveal_traps',
-            range: 'global'
-          },
-          ability1: {
-            name: 'Echo Scan',
-            description: 'Highlight vulnerable nodes for 8s',
-            cooldown: 16,
-            duration: 8,
-            effect: 'highlight_vulnerabilities'
-          },
-          ability2: {
-            name: 'Predictive Mesh',
-            description: 'Forecast next sweep, grant dodge window',
-            cooldown: 25,
-            effect: 'dodge_window',
-            duration: 5
-          },
-          ultimate: {
-            name: 'Oracle Burst',
-            description: 'Reveal full mission map for 6s',
-            type: 'charge',
-            duration: 6,
-            effect: 'reveal_map',
-            chargeRequired: 100
-          }
-        }
       }
     };
   }

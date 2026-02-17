@@ -28,8 +28,7 @@ from pydantic import BaseModel
 
 class AgentRole(str, Enum):
     HACKER = "hacker"
-    INFILTRATOR = "infiltrator" 
-    ANALYST = "analyst"
+    INFILTRATOR = "infiltrator"
 
 class ThreatLevel(str, Enum):
     LOW = "LOW"
@@ -223,21 +222,21 @@ class NexusMonitorServer:
             2: MissionObjective(2, "Create false identity", "Generate fake credentials", 
                               MissionPhase.BEACHHEAD, 20.0, 200, -10.0, 1800, [AgentRole.INFILTRATOR]),
             3: MissionObjective(3, "Map security systems", "Scan network topology", 
-                              MissionPhase.BEACHHEAD, 15.0, 150, 0.0, 1800, [AgentRole.ANALYST]),
+                              MissionPhase.BEACHHEAD, 15.0, 150, 0.0, 1800, [AgentRole.HACKER]),
             
             # Phase 02: Penetration
             4: MissionObjective(4, "Bypass biometric gateway", "Forge biometric data", 
                               MissionPhase.PENETRATION, 25.0, 250, 0.0, 1680, [AgentRole.INFILTRATOR, AgentRole.HACKER]),
             5: MissionObjective(5, "Escalate privileges", "Gain Tier-5 access", 
-                              MissionPhase.PENETRATION, 20.0, 200, 0.0, 1680, [AgentRole.HACKER, AgentRole.ANALYST]),
+                              MissionPhase.PENETRATION, 20.0, 200, 0.0, 1680, [AgentRole.HACKER]),
             6: MissionObjective(6, "Disable alarm systems", "Deploy countermeasures", 
                               MissionPhase.PENETRATION, 15.0, 150, -20.0, 1680, [AgentRole.HACKER]),
             
             # Phase 03: Extraction
             7: MissionObjective(7, "Locate Project Chimera", "Access vault database", 
-                              MissionPhase.EXTRACTION, 20.0, 200, 0.0, 1800, [AgentRole.ANALYST]),
+                              MissionPhase.EXTRACTION, 20.0, 200, 0.0, 1800, [AgentRole.HACKER]),
             8: MissionObjective(8, "Extract data fragments", "Download 5 fragments", 
-                              MissionPhase.EXTRACTION, 30.0, 300, 0.0, 1800, [AgentRole.HACKER, AgentRole.ANALYST]),
+                              MissionPhase.EXTRACTION, 30.0, 300, 0.0, 1800, [AgentRole.HACKER]),
             9: MissionObjective(9, "Exfiltrate safely", "Clear traces and escape", 
                               MissionPhase.EXTRACTION, 20.0, 200, 0.0, 1800, [AgentRole.INFILTRATOR])
         }
@@ -344,8 +343,8 @@ class NexusMonitorServer:
         session = PlayerSession(
             session_id=session_id,
             team_name=session_data.get('team_name', 'Unknown Team'),
-            selected_agent=AgentRole(session_data.get('selected_agent', 'analyst')),
-            agent_color=session_data.get('agent_color', '#0AC8B9'),
+            selected_agent=AgentRole(session_data.get('selected_agent', 'hacker')),
+            agent_color=session_data.get('agent_color', '#FF1744'),
             authenticated=session_data.get('authenticated', False),
             mission_progress=0.0,
             threat_level=ThreatLevel.LOW,

@@ -20,29 +20,49 @@ const agents = {
     id: 'hacker',
     name: 'BREACH ARCHITECT',
     codeName: 'CIPHER',
-    description: 'System exploitation and digital warfare specialist',
-    philosophy: 'Language of systems is code. She writes the lies the Vault reads.',
-    image: '/assets/card-left-01.webp',
-    stats: { hacking: 100, stealth: 60, combat: 40, analysis: 70 },
+    description: 'Elite penetration tester specializing in system exploitation and zero-day research',
+    philosophy: 'Every system has a weakness. Every weakness has an exploit. Every exploit has a purpose.',
+    image: '/assets/agent01.webp',
+    stats: { 
+      exploitation: 100, 
+      reconnaissance: 85, 
+      persistence: 75, 
+      evasion: 80 
+    },
     abilities: [
-      'Cipher Cache: False telemetry echo',
-      'Ghost Port: Disable external logs',
-      'System Lattice: Backdoor network deployment'
-    ]
+      'Zero-Day Arsenal: Access to custom exploits for unpatched vulnerabilities',
+      'Payload Obfuscation: Bypass antivirus and EDR detection systems',
+      'Privilege Escalation: Exploit misconfigurations to gain root/admin access',
+      'Backdoor Deployment: Establish persistent access mechanisms',
+      'Memory Injection: Execute code directly in process memory'
+    ],
+    specialization: 'Red Team Operations',
+    background: 'Former NSA TAO operator with 10+ years in offensive security. Specializes in advanced persistent threat (APT) simulation and critical infrastructure penetration testing.',
+    tools: ['Metasploit', 'Cobalt Strike', 'BloodHound', 'Mimikatz', 'Custom Exploits']
   },
   infiltrator: {
     id: 'infiltrator',
     name: 'SHADOW LINGUIST',
     codeName: 'GHOST',
-    description: 'Social engineering and identity manipulation specialist',
-    philosophy: 'People open doors that only words can unlock.',
-    image: '/assets/card-right-01.webp',
-    stats: { hacking: 40, stealth: 100, combat: 70, analysis: 60 },
+    description: 'Master of social engineering, OSINT, and covert network infiltration',
+    philosophy: 'The strongest firewall is useless when someone holds the door open for you.',
+    image: '/assets/agent02.webp',
+    stats: { 
+      stealth: 100, 
+      manipulation: 95, 
+      intelligence: 90, 
+      adaptation: 85 
+    },
     abilities: [
-      'Social Echo: Boost persuasion checks',
-      'False Face: Temporary persona overlay',
-      'Crowd Scripting: Manipulate public telemetry'
-    ]
+      'Social Engineering: Manipulate targets through psychological exploitation',
+      'OSINT Mastery: Extract intelligence from public and private sources',
+      'Identity Spoofing: Assume false identities with complete authenticity',
+      'Phishing Campaigns: Craft convincing lures for credential harvesting',
+      'Physical Infiltration: Bypass physical security through social tactics'
+    ],
+    specialization: 'Red Team Operations',
+    background: 'Ex-intelligence operative with expertise in human intelligence (HUMINT) and technical surveillance. Combines psychological warfare with technical prowess.',
+    tools: ['SET (Social Engineer Toolkit)', 'Maltego', 'TheHarvester', 'Gophish', 'Recon-ng']
   }
 };
 
@@ -168,17 +188,6 @@ export default function AgentSelect({ }: AgentSelectProps) {
                       ID: {agent.id.toUpperCase()}-001
                     </div>
                   </div>
-
-                  {/* Selection indicator */}
-                  {selectedAgent === agent.id && (
-                    <div className="absolute top-4 right-4">
-                      <div className="w-8 h-8 bg-theme-primary rounded-full flex items-center justify-center animate-pulse">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                        </svg>
-                      </div>
-                    </div>
-                  )}
 
                   {/* Hover effect border */}
                   <div className="absolute inset-0 border-2 border-transparent group-hover:border-theme-primary/50 rounded-lg transition-colors duration-300" />

@@ -1,23 +1,21 @@
 /**
  * NEXUS PROTOCOL - Cinematic Trailer Sequence
- * 55-second cinematic introduction with voiceover timeline
- * Enhanced with aaa folder agent animation references
- * Version: 2.1.0 - Enhanced Agent Animations
- * Last Updated: December 20, 2025
+ * Enhanced cinematic introduction with real agent and team images
+ * Version: 4.0.0 - Complete Redesign with Asset Images
+ * Last Updated: February 17, 2026
  */
 
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { gsap } from '../../lib/gsap.js';
-import { Zap, Eye, Brain, AlertTriangle, Lock } from 'lucide-react';
+import { Shield, Sword, Lock, AlertTriangle } from 'lucide-react';
 import '../../styles/trailer-cinematic.css';
 
 export default function TrailerSequence() {
   const navigate = useNavigate();
   const containerRef = useRef<HTMLDivElement>(null);
   const pixelRef = useRef<HTMLDivElement>(null);
-  const cityRef = useRef<HTMLDivElement>(null);
-  const uiOverlayRef = useRef<HTMLDivElement>(null);
+  const teamRevealRef = useRef<HTMLDivElement>(null);
   const systemAlertRef = useRef<HTMLDivElement>(null);
   const vaultRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
@@ -31,130 +29,111 @@ export default function TrailerSequence() {
     const tl = gsap.timeline({
       onComplete: () => {
         sessionStorage.setItem('nexus_trailer_shown', 'true');
-        setTimeout(() => navigate('/login'), 1000);
+        setTimeout(() => navigate('/team-select'), 1000);
       }
     });
 
-    // 🎬 CINEMATIC TRAILER TIMELINE (55 seconds)
+    // 🎬 ENHANCED CINEMATIC TRAILER TIMELINE (50 seconds)
 
     // 0-5s: Black → pixel ignites
     tl.set(containerRef.current, { backgroundColor: '#000000' })
-      .call(() => setCurrentVO('Every system trusts something.'))
+      .call(() => setCurrentVO('In the shadows of the digital world...'), [], 0)
       .fromTo(pixelRef.current,
-        { scale: 0, opacity: 0, backgroundColor: '#FF1744' },
-        { scale: 1, opacity: 1, duration: 2, ease: 'power2.out' }
+        { scale: 0, opacity: 0, backgroundColor: '#00D4FF' },
+        { scale: 1, opacity: 1, duration: 2, ease: 'power2.out' },
+        1
       )
       .to(pixelRef.current, {
-        scale: 50,
-        opacity: 0.8,
+        scale: 80,
+        opacity: 0.6,
         duration: 3,
         ease: 'power3.out'
-      }, '-=1')
+      }, 2)
 
-      // 6-15s: City reveal with UI overlays
-      .call(() => setCurrentVO('Trust is the weakness.'), [], 6)
+      // 6-15s: Team reveal - Red Team vs Blue Team with actual images
+      .call(() => setCurrentVO('Two forces collide.'), [], 6)
       .to(containerRef.current, {
         backgroundColor: '#0A0A0F',
         duration: 1
       }, 6)
-      .fromTo(cityRef.current,
-        { opacity: 0, scale: 1.2, y: 50 },
-        { opacity: 1, scale: 1, y: 0, duration: 3, ease: 'power2.out' },
-        6.5
+      .set(teamRevealRef.current, { autoAlpha: 1 }, 7)
+      .fromTo('#team-red',
+        { opacity: 0, x: -300, rotationY: -45, scale: 0.8 },
+        { opacity: 1, x: 0, rotationY: 0, scale: 1, duration: 2, ease: 'power2.out' },
+        7
       )
-      .fromTo(uiOverlayRef.current,
-        { opacity: 0, x: -100 },
-        { opacity: 0.8, x: 0, duration: 2, ease: 'power2.out', stagger: 0.3 },
-        8
+      .fromTo('#team-blue',
+        { opacity: 0, x: 300, rotationY: 45, scale: 0.8 },
+        { opacity: 1, x: 0, rotationY: 0, scale: 1, duration: 2, ease: 'power2.out' },
+        7.5
       )
-
-      // 16-25s: Agent role flashes with rapid cuts (Enhanced from aaa reference)
-      .call(() => setCurrentVO('Choose how you break in.'), [], 16)
-      .to([cityRef.current, uiOverlayRef.current], {
+      .to('#team-red, #team-blue', {
+        scale: 1.05,
+        duration: 1,
+        ease: 'sine.inOut',
+        yoyo: true,
+        repeat: 1
+      }, 10)
+      .call(() => setCurrentVO('Choose your operative.'), [], 13)
+      .to(teamRevealRef.current, {
         opacity: 0,
-        duration: 0.5
-      }, 16)
+        scale: 0.8,
+        duration: 1
+      }, 14)
 
-      // GHOST Agent Flash
-      .set('#role-ghost', { autoAlpha: 1 }, 16.5)
-      .fromTo('#role-ghost .role-img',
-        { x: 50, opacity: 0, scale: 0.8 },
-        { x: 0, opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' },
+      // 16-26s: Agent reveals with actual images
+      // CIPHER Agent (Red Team - Breach Architect)
+      .set('#agent-cipher', { autoAlpha: 1 }, 16)
+      .fromTo('#agent-cipher .agent-image',
+        { scale: 0.5, opacity: 0, rotationY: 180 },
+        { scale: 1, opacity: 1, rotationY: 0, duration: 1.5, ease: 'back.out(1.7)' },
+        16
+      )
+      .fromTo('#agent-cipher .agent-info',
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: 'power2.out' },
         16.5
       )
-      .fromTo('#role-ghost .role-text',
-        { x: -50, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.4, ease: 'power2.out' },
-        16.5
-      )
-      .to('#role-ghost', { autoAlpha: 0, duration: 0.2 }, 18.3)
+      .to('#agent-cipher', { autoAlpha: 0, duration: 0.5 }, 20)
 
-      // CIPHER Agent Flash
-      .set('#role-cipher', { autoAlpha: 1 }, 18.5)
-      .fromTo('#role-cipher .role-img',
-        { x: 50, opacity: 0, scale: 0.8 },
-        { x: 0, opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' },
-        18.5
+      // GHOST Agent (Blue Team - Shadow Linguist)
+      .set('#agent-ghost', { autoAlpha: 1 }, 21)
+      .fromTo('#agent-ghost .agent-image',
+        { scale: 0.5, opacity: 0, rotationY: -180 },
+        { scale: 1, opacity: 1, rotationY: 0, duration: 1.5, ease: 'back.out(1.7)' },
+        21
       )
-      .fromTo('#role-cipher .role-text',
-        { x: -50, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.4, ease: 'power2.out' },
-        18.5
+      .fromTo('#agent-ghost .agent-info',
+        { y: 50, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1, ease: 'power2.out' },
+        21.5
       )
-      .to('#role-cipher', { autoAlpha: 0, duration: 0.2 }, 20.3)
+      .to('#agent-ghost', { autoAlpha: 0, duration: 0.5 }, 25)
 
-      // NEXUS Agent Flash
-      .set('#role-nexus', { autoAlpha: 1 }, 20.5)
-      .fromTo('#role-nexus .role-img',
-        { x: 50, opacity: 0, scale: 0.8 },
-        { x: 0, opacity: 1, scale: 1, duration: 0.4, ease: 'power2.out' },
-        20.5
-      )
-      .fromTo('#role-nexus .role-text',
-        { x: -50, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.4, ease: 'power2.out' },
-        20.5
-      )
-      .to('#role-nexus', { autoAlpha: 0, duration: 0.2 }, 22.3)
-
-      // Final agent selection simulation
-      .set('#agent-selection', { autoAlpha: 1 }, 23)
-      .fromTo('.choice-card',
-        { y: 50, opacity: 0, scale: 0.9 },
-        { y: 0, opacity: 1, scale: 1, stagger: 0.2, duration: 0.8, ease: 'back.out(1.7)' },
-        23
-      )
-      .to('#choice-ghost', {
-        scale: 1.1,
-        borderColor: '#0ac8b9',
-        boxShadow: '0 0 30px #0ac8b9',
-        duration: 0.5
-      }, 24)
-      .to('.choice-card:not(#choice-ghost)', {
-        opacity: 0.3,
-        scale: 0.9,
-        duration: 0.5
-      }, 24)
-      .to('#agent-selection', { autoAlpha: 0, duration: 0.5 }, 25)
-
-      // 26-35s: System breaker alert with red inversion
-      .call(() => setCurrentVO('And what you leave behind.'), [], 26)
+      // 27-35s: System breach alert
+      .call(() => setCurrentVO('Every choice has consequences.'), [], 27)
       .to(containerRef.current, {
         backgroundColor: '#FF1744',
-        duration: 0.2
-      }, 26)
+        duration: 0.3
+      }, 27)
       .fromTo(systemAlertRef.current,
         { opacity: 0, y: 100, rotationX: -90 },
         { opacity: 1, y: 0, rotationX: 0, duration: 2, ease: 'back.out(1.7)' },
-        26.5
+        27.5
       )
+      .to('.crack-line', {
+        clipPath: 'inset(0 0 0 0)',
+        duration: 2,
+        stagger: 0.3
+      }, 28)
       .to(containerRef.current, {
         backgroundColor: '#000000',
         duration: 1,
         ease: 'power2.in'
       }, 33)
+      .to(systemAlertRef.current, { opacity: 0, duration: 0.5 }, 33)
 
-      // 36-48s: Black Vault sequence
+      // 36-44s: Black Vault sequence
       .call(() => setCurrentVO('There is no clean exit.'), [], 36)
       .fromTo(vaultRef.current,
         { opacity: 0, scale: 0.5, rotationY: -180 },
@@ -167,17 +146,17 @@ export default function TrailerSequence() {
         ease: 'sine.inOut',
         yoyo: true,
         repeat: 1
-      }, 42)
+      }, 40)
       .to(vaultRef.current, {
         opacity: 0,
         scale: 0.8,
         duration: 2,
         ease: 'power2.in'
-      }, 46)
+      }, 43)
 
-      // 49-55s: Silence → Logo assembly
-      .call(() => setCurrentVO(''), [], 49)
-      .set(containerRef.current, { backgroundColor: '#000000' }, 49)
+      // 45-50s: Final logo reveal
+      .call(() => setCurrentVO(''), [], 45)
+      .set(containerRef.current, { backgroundColor: '#000000' }, 45)
       .fromTo(logoRef.current,
         {
           opacity: 0,
@@ -190,18 +169,17 @@ export default function TrailerSequence() {
           scale: 1,
           rotationY: 0,
           y: 0,
-          duration: 4,
+          duration: 3,
           ease: 'power3.out'
         },
-        50
+        46
       )
-      .call(() => setCurrentVO('NEXUS PROTOCOL.'), [], 53)
+      .call(() => setCurrentVO('NEXUS PROTOCOL'), [], 48)
       .to(logoRef.current, {
-        backgroundImage: 'linear-gradient(135deg, #FF1744, #00D4FF, #0AC8B9)',
-        webkitBackgroundClip: 'text',
-        webkitTextFillColor: 'transparent',
-        duration: 2
-      }, 53);
+        scale: 1.05,
+        duration: 1,
+        ease: 'sine.inOut'
+      }, 48);
 
     return () => {
       tl.kill();
@@ -210,23 +188,19 @@ export default function TrailerSequence() {
 
   const handleSkip = () => {
     sessionStorage.setItem('nexus_trailer_shown', 'true');
-    navigate('/login');
+    navigate('/team-select');
   };
 
   return (
     <div
       ref={containerRef}
-      className="trailer-container cursor-pointer"
-      onClick={handleSkip}
+      className="trailer-container"
     >
-      {/* Skip Button Indicator */}
-      <div className="absolute bottom-8 right-8 z-50 animate-pulse">
+      {/* Skip Button */}
+      <div className="absolute bottom-8 right-8 z-50">
         <button
-          onClick={(e) => {
-            e.stopPropagation();
-            handleSkip();
-          }}
-          className="text-arcane-teal font-mono text-sm border border-arcane-teal/30 px-4 py-2 bg-black/50 hover:bg-arcane-teal/10 transition-colors"
+          onClick={handleSkip}
+          className="skip-button text-arcane-teal font-mono text-sm border border-arcane-teal/30 px-6 py-3 bg-black/50 hover:bg-arcane-teal/10 transition-all hover:border-arcane-teal"
         >
           SKIP SEQUENCE &gt;&gt;
         </button>
@@ -238,114 +212,117 @@ export default function TrailerSequence() {
         className="pixel-ignite absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0"
       />
 
-      {/* City Reveal */}
+      {/* Team Reveal - Red Team vs Blue Team */}
       <div
-        ref={cityRef}
-        className="city-backdrop absolute inset-0 opacity-0"
+        ref={teamRevealRef}
+        className="scene absolute inset-0 flex items-center justify-center gap-16 invisible"
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-arcane-dark to-transparent" />
-      </div>
+        <div id="team-red" className="team-card opacity-0">
+          <div className="relative w-96 h-[500px] overflow-hidden rounded-xl border-4 border-red-600 shadow-2xl shadow-red-600/50">
+            <img
+              src="/assets/RED TEAM.WEBP"
+              alt="Red Team - Offensive Security"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
+              <Sword className="w-16 h-16 text-red-600 mx-auto mb-4" />
+              <h3 className="text-4xl font-bold text-white mb-2">RED TEAM</h3>
+              <p className="text-red-400 text-lg font-mono">OFFENSIVE SECURITY</p>
+            </div>
+          </div>
+        </div>
 
-      {/* UI Overlays */}
-      <div ref={uiOverlayRef} className="ui-overlay absolute inset-0 opacity-0">
-        <div className="absolute top-8 left-8 font-mono text-arcane-teal text-sm">
-          SYSTEM_STATUS: ACTIVE
-        </div>
-        <div className="absolute top-8 right-8 font-mono text-arcane-orange text-sm">
-          TRACE_LEVEL: 23%
-        </div>
-        <div className="absolute bottom-8 left-8 font-mono text-arcane-muted text-xs">
-          CONNECTION_SECURE
-        </div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div className="w-64 h-64 border border-arcane-teal opacity-30 animate-pulse" />
-        </div>
-      </div>
-
-      {/* Enhanced Agent Role Flashes - Based on aaa reference */}
-      <div id="role-ghost" className="scene absolute inset-0 flex items-center justify-center invisible bg-arcane-dark">
-        <div className="flex items-center gap-8">
-          <Zap size={120} className="role-img text-arcane-teal" />
-          <div className="role-text text-left">
-            <h2 className="text-6xl font-display font-bold text-white">GHOST</h2>
-            <p className="text-arcane-teal tracking-widest">STEALTH SPECIALIST</p>
+        <div id="team-blue" className="team-card opacity-0">
+          <div className="relative w-96 h-[500px] overflow-hidden rounded-xl border-4 border-cyan-500 shadow-2xl shadow-cyan-500/50">
+            <img
+              src="/assets/BLUETEAM.WEBP"
+              alt="Blue Team - Defensive Security"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
+              <Shield className="w-16 h-16 text-cyan-500 mx-auto mb-4" />
+              <h3 className="text-4xl font-bold text-white mb-2">BLUE TEAM</h3>
+              <p className="text-cyan-400 text-lg font-mono">DEFENSIVE SECURITY</p>
+            </div>
           </div>
         </div>
       </div>
 
-      <div id="role-cipher" className="scene absolute inset-0 flex items-center justify-center invisible bg-arcane-dark">
-        <div className="flex items-center gap-8">
-          <Eye size={120} className="role-img text-arcane-purple" />
-          <div className="role-text text-left">
-            <h2 className="text-6xl font-display font-bold text-white">CIPHER</h2>
-            <p className="text-arcane-purple tracking-widest">DATA ANALYST</p>
+      {/* CIPHER Agent Scene */}
+      <div id="agent-cipher" className="scene absolute inset-0 flex items-center justify-center invisible">
+        <div className="agent-showcase">
+          <div className="agent-image relative w-[600px] h-[700px] overflow-hidden rounded-2xl border-4 border-red-600 shadow-2xl shadow-red-600/50">
+            <img
+              src="/assets/agent01.webp"
+              alt="CIPHER - Breach Architect"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+          </div>
+          <div className="agent-info absolute bottom-12 left-0 right-0 text-center">
+            <div className="inline-block bg-black/80 backdrop-blur-md px-12 py-6 rounded-xl border-2 border-red-600">
+              <h2 className="text-6xl font-bold text-white mb-2">CIPHER</h2>
+              <p className="text-2xl text-red-400 font-mono mb-2">BREACH ARCHITECT</p>
+              <p className="text-lg text-gray-400">System Exploitation Specialist</p>
+            </div>
           </div>
         </div>
       </div>
 
-      <div id="role-nexus" className="scene absolute inset-0 flex items-center justify-center invisible bg-arcane-dark">
-        <div className="flex items-center gap-8">
-          <Brain size={120} className="role-img text-arcane-gold" />
-          <div className="role-text text-left">
-            <h2 className="text-6xl font-display font-bold text-white">NEXUS</h2>
-            <p className="text-arcane-gold tracking-widest">SYSTEM BREAKER</p>
+      {/* GHOST Agent Scene */}
+      <div id="agent-ghost" className="scene absolute inset-0 flex items-center justify-center invisible">
+        <div className="agent-showcase">
+          <div className="agent-image relative w-[600px] h-[700px] overflow-hidden rounded-2xl border-4 border-cyan-500 shadow-2xl shadow-cyan-500/50">
+            <img
+              src="/assets/agent02.webp"
+              alt="GHOST - Shadow Linguist"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
+          </div>
+          <div className="agent-info absolute bottom-12 left-0 right-0 text-center">
+            <div className="inline-block bg-black/80 backdrop-blur-md px-12 py-6 rounded-xl border-2 border-cyan-500">
+              <h2 className="text-6xl font-bold text-white mb-2">GHOST</h2>
+              <p className="text-2xl text-cyan-400 font-mono mb-2">SHADOW LINGUIST</p>
+              <p className="text-lg text-gray-400">Social Engineering Specialist</p>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Agent Selection Scene */}
-      <div id="agent-selection" className="scene absolute inset-0 flex flex-col items-center justify-center invisible gap-10">
-        <h2 className="text-3xl font-bold tracking-widest text-white">CHOOSE YOUR PATH</h2>
-        <div className="flex gap-8">
-          <div id="choice-ghost" className="choice-card w-64 h-80 bg-arcane-card border border-white/10 p-6 flex flex-col items-center justify-center gap-4 transition-all">
-            <Zap size={64} className="text-arcane-teal" />
-            <h3 className="text-xl font-bold text-white">GHOST</h3>
-            <p className="text-sm text-arcane-muted text-center">Stealth Specialist</p>
-          </div>
-          <div id="choice-cipher" className="choice-card w-64 h-80 bg-arcane-card border border-white/10 p-6 flex flex-col items-center justify-center gap-4 transition-all">
-            <Eye size={64} className="text-arcane-purple" />
-            <h3 className="text-xl font-bold text-white">CIPHER</h3>
-            <p className="text-sm text-arcane-muted text-center">Data Analyst</p>
-          </div>
-          <div id="choice-nexus" className="choice-card w-64 h-80 bg-arcane-card border border-white/10 p-6 flex flex-col items-center justify-center gap-4 transition-all">
-            <Brain size={64} className="text-arcane-gold" />
-            <h3 className="text-xl font-bold text-white">NEXUS</h3>
-            <p className="text-sm text-arcane-muted text-center">System Breaker</p>
-          </div>
-        </div>
-      </div>
-
-      {/* System Alert - Enhanced with aaa reference */}
+      {/* System Alert */}
       <div
         ref={systemAlertRef}
         className="absolute inset-0 flex items-center justify-center opacity-0"
       >
-        <div className="text-center">
-          <AlertTriangle size={150} className="text-arcane-danger mx-auto mb-8 animate-pulse" />
-          <div className="system-alert text-6xl font-bold text-white mb-8">
-            SYSTEM BREACH DETECTED
+        <div className="text-center relative">
+          <AlertTriangle size={150} className="text-red-600 mx-auto mb-8 animate-pulse" />
+          <div className="system-alert text-7xl font-bold text-white mb-8">
+            SYSTEM BREACH
           </div>
-          <div className="text-2xl text-arcane-red font-mono">
+          <div className="text-3xl text-red-500 font-mono">
             TRACE LEVEL: CRITICAL
           </div>
         </div>
-        <div className="crack-line absolute top-0 left-1/3 w-[1px] h-full bg-arcane-danger/50" style={{ clipPath: 'inset(0 100% 0 0)' }} />
-        <div className="crack-line absolute top-1/3 left-0 w-full h-[1px] bg-arcane-danger/50" style={{ clipPath: 'inset(0 100% 0 0)' }} />
+        <div className="crack-line absolute top-0 left-1/3 w-[2px] h-full bg-red-600/70" style={{ clipPath: 'inset(0 100% 0 0)' }} />
+        <div className="crack-line absolute top-1/3 left-0 w-full h-[2px] bg-red-600/70" style={{ clipPath: 'inset(0 100% 0 0)' }} />
+        <div className="crack-line absolute top-2/3 right-1/4 w-full h-[2px] bg-red-600/70" style={{ clipPath: 'inset(0 100% 0 0)' }} />
       </div>
 
-      {/* Black Vault - Enhanced with aaa reference */}
+      {/* Black Vault */}
       <div
         ref={vaultRef}
         className="vault-container absolute inset-0 flex items-center justify-center opacity-0"
       >
         <div className="vault-door relative">
-          <div className="w-96 h-96 border-4 border-arcane-teal bg-black/90 flex flex-col items-center justify-center gap-4">
-            <Lock size={80} className="text-arcane-teal" />
-            <div className="text-4xl font-mono text-arcane-teal">
+          <div className="w-[500px] h-[500px] border-4 border-cyan-500 bg-black/90 flex flex-col items-center justify-center gap-6 rounded-xl">
+            <Lock size={120} className="text-cyan-500" />
+            <div className="text-5xl font-mono text-cyan-500 tracking-widest">
               █ CLASSIFIED █
             </div>
-            <div className="text-sm font-mono text-arcane-muted">
+            <div className="text-xl font-mono text-gray-400">
               ACCESS DENIED
             </div>
           </div>
@@ -358,10 +335,10 @@ export default function TrailerSequence() {
         className="logo-assembly absolute inset-0 flex items-center justify-center opacity-0"
       >
         <div className="text-center">
-          <div className="logo-text text-8xl font-bold font-display mb-4">
+          <div className="logo-text text-9xl font-bold font-display mb-6">
             NEXUS
           </div>
-          <div className="text-4xl font-mono text-arcane-teal">
+          <div className="text-5xl font-mono text-cyan-500 tracking-widest">
             PROTOCOL
           </div>
         </div>
@@ -370,11 +347,11 @@ export default function TrailerSequence() {
       {/* Voiceover Display */}
       <div
         ref={voiceoverRef}
-        className="absolute bottom-16 left-1/2 transform -translate-x-1/2 text-center"
+        className="absolute bottom-24 left-1/2 transform -translate-x-1/2 text-center"
       >
         {currentVO && (
-          <div className="voiceover-display px-8 py-4">
-            <div className="text-xl font-mono text-arcane-teal">
+          <div className="voiceover-display px-12 py-6">
+            <div className="text-2xl font-mono text-cyan-400">
               {currentVO}
             </div>
           </div>
